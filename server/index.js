@@ -72,6 +72,14 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 
 // Health check endpoint
+app.get("/", (req, res) => {
+  res.json({
+    message: "Korter Clone API is running",
+    status: "OK",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Server is running" });
 });
