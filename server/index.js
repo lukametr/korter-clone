@@ -80,6 +80,41 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// Debug endpoint for database connection
+app.get("/api/debug/db", async (req, res) => {
+  try {
+    const isConnected = mongoose.connection.readyState === 1;
+    const dbName = mongoose.connection.name || "unknown";
+    const dbHost = mongoose.connection.host || "unknown";
+
+    res.json({
+      connected: isConnected,
+      connectionState: mongoose.connection.readyState, // 0=disconnected, 1=connected, 2=connecting, 3=disconnecting
+      database: dbName,
+      host: dbHost,
+      mongodbUri: process.env.MONGODB_URI ? "SET" : "MISSING",
+      jwtSecret: process.env.JWT_SECRET ? "SET" : "MISSING",
+      nodeEnv: process.env.NODE_ENV || "unknown",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      stack: error.stack,
+    });
+  }
+});
+
+// Debug endpoint for environment variables
+app.get("/api/debug/env", (req, res) => {
+  res.json({
+    NODE_ENV: process.env.NODE_ENV || "undefined",
+    PORT: process.env.PORT || "undefined",
+    MONGODB_URI_SET: process.env.MONGODB_URI ? "YES" : "NO",
+    JWT_SECRET_SET: process.env.JWT_SECRET ? "YES" : "NO",
+    CORS_ORIGIN: process.env.CORS_ORIGIN || "undefined",
+  });
+});
+
 // Simple ping endpoint for connectivity test
 app.get("/api/auth/ping", (req, res) => {
   res.json({ status: "ok", message: "Auth ping successful" });

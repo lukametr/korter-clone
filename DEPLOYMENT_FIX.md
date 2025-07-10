@@ -40,9 +40,10 @@ After backend deployment, verify:
 ## Current Status
 
 ✅ Frontend builds correctly  
-✅ Relative API URLs configured  
-⏳ Need backend deployment to Vercel  
-⏳ Need MongoDB Atlas setup for production
+✅ Relative API URLs configured (**WORKING** - no more `/api/api/` duplication)  
+✅ Backend server is running (health endpoint responds)  
+❌ **NEW ISSUE**: Backend returning 500 errors for `/api/properties` and auth endpoints  
+⚠️ **DIAGNOSIS**: MongoDB connection issue or missing environment variables on production
 
 ## ✅ ISSUE RESOLVED
 
@@ -72,3 +73,84 @@ The `/api/api/...` URL duplication was happening because:
 3. **Test image upload** and property creation
 
 The API URL duplication issue is now completely resolved in the codebase.
+
+## 🔍 CURRENT PRODUCTION ISSUE (NEW)
+
+### Problem Diagnosis
+
+✅ **Frontend API URLs fixed**: No more `/api/api/` duplication - this is RESOLVED  
+✅ **Backend server running**: `https://www.homeinfo.ge/api/health` returns 200 OK  
+❌ **Database endpoints failing**: `/api/properties`, `/api/auth/login` return 500 errors
+
+### Error Details
+
+```
+GET https://www.homeinfo.ge/api/properties → 500 Internal Server Error
+POST https://www.homeinfo.ge/api/auth/login → 500 Internal Server Error
+Response: {"message":"სერვერის შეცდომა"}
+```
+
+### Likely Causes
+
+1. **MongoDB Connection Issue**: Production MongoDB URI not working
+2. **Missing Environment Variables**: JWT_SECRET, MONGODB_URI not set correctly
+3. **Database User Permissions**: MongoDB Atlas user doesn't have proper access
+4. **Network/Firewall**: MongoDB Atlas IP whitelist missing production server IP
+
+### 🛠️ IMMEDIATE FIX STEPS
+
+#### Step 1: Check Production Environment Variables
+
+Verify these are set correctly on your production server (Vercel/Hosting):
+
+```env
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/korter_production
+JWT_SECRET=your_64_character_secret_key_here
+NODE_ENV=production
+CORS_ORIGIN=https://www.homeinfo.ge
+```
+
+#### Step 2: MongoDB Atlas Configuration
+
+1. **Check Connection String**: Must be valid and include password
+2. **IP Whitelist**: Add `0.0.0.0/0` (allow all) or production server IP
+3. **Database User**: Ensure user has `readWrite` permissions
+4. **Network**: Verify cluster is accessible from external networks
+
+#### Step 3: Test Database Connection
+
+Add this temporary endpoint to test MongoDB connectivity:
+
+```javascript
+// Add to server/index.js for testing
+app.get("/api/debug/db", async (req, res) => {
+  try {
+    const isConnected = mongoose.connection.readyState === 1;
+    const dbName = mongoose.connection.name;
+    res.json({
+      connected: isConnected,
+      database: dbName,
+      uri: process.env.MONGODB_URI ? "SET" : "MISSING",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+```
+
+#### Step 4: Backend Logs
+
+Check your hosting platform logs for specific error messages:
+
+- Look for "MongoDB connection error"
+- Check for JWT_SECRET warnings
+- Verify environment variables are loaded
+
+### 🎯 QUICK SOLUTION
+
+The **easiest fix** if you don't have MongoDB Atlas set up:
+
+1. Create free MongoDB Atlas account at mongodb.com/atlas
+2. Create cluster → Get connection string
+3. Add environment variables to your hosting platform
+4. Redeploy backend
