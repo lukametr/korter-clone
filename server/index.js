@@ -115,6 +115,20 @@ app.get("/api/debug/env", (req, res) => {
   });
 });
 
+// Debug endpoint for Cloudinary configuration
+app.get("/api/debug/cloudinary", (req, res) => {
+  res.json({
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME ? "SET" : "MISSING",
+    apiKey: process.env.CLOUDINARY_API_KEY ? "SET" : "MISSING",
+    apiSecret: process.env.CLOUDINARY_API_SECRET ? "SET" : "MISSING",
+    cloudinaryConfigured: !!(
+      process.env.CLOUDINARY_CLOUD_NAME &&
+      process.env.CLOUDINARY_API_KEY &&
+      process.env.CLOUDINARY_API_SECRET
+    ),
+  });
+});
+
 // Simple ping endpoint for connectivity test
 app.get("/api/auth/ping", (req, res) => {
   res.json({ status: "ok", message: "Auth ping successful" });
