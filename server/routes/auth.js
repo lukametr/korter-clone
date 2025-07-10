@@ -79,8 +79,16 @@ router.post(
         },
       });
     } catch (error) {
-      console.error("Register error:", error);
-      res.status(500).json({ message: "სერვერის შეცდომა" });
+      console.error("Register error details:", {
+        message: error.message,
+        stack: error.stack,
+        jwtSecret: process.env.JWT_SECRET ? "SET" : "MISSING",
+      });
+      res.status(500).json({
+        message: "სერვერის შეცდომა",
+        error:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 );
@@ -139,8 +147,16 @@ router.post(
         },
       });
     } catch (error) {
-      console.error("Login error:", error);
-      res.status(500).json({ message: "სერვერის შეცდომა" });
+      console.error("Login error details:", {
+        message: error.message,
+        stack: error.stack,
+        jwtSecret: process.env.JWT_SECRET ? "SET" : "MISSING",
+      });
+      res.status(500).json({
+        message: "სერვერის შეცდომა",
+        error:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 );
@@ -158,6 +174,23 @@ router.get("/me", auth, async (req, res) => {
   } catch (error) {
     console.error("Get user error:", error);
     res.status(500).json({ message: "სერვერის შეცდომა" });
+  }
+});
+
+// Debug auth test endpoint
+router.post("/debug/test", async (req, res) => {
+  try {
+    res.json({
+      message: "Auth debug test successful",
+      jwtSecret: process.env.JWT_SECRET ? "SET" : "MISSING",
+      mongoConnected: require("mongoose").connection.readyState === 1,
+      body: req.body,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      jwtSecret: process.env.JWT_SECRET ? "SET" : "MISSING",
+    });
   }
 });
 
