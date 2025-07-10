@@ -89,7 +89,12 @@ app.get("/api/auth/ping", (req, res) => {
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 // Catch all handler: send back React's index.html file for any non-API routes
+// BUT NOT for static assets (js, css, images, etc.)
 app.get("*", (req, res) => {
+  // Don't serve index.html for static assets
+  if (req.url.includes(".")) {
+    return res.status(404).send("Not found");
+  }
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
