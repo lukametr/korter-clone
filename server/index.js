@@ -85,22 +85,12 @@ app.get("/api/auth/ping", (req, res) => {
   res.json({ status: "ok", message: "Auth ping successful" });
 });
 
-// Root endpoint for API
-app.get("/", (req, res) => {
-  res.json({
-    message: "Korter Clone API is running",
-    status: "OK",
-    timestamp: new Date().toISOString(),
-    endpoints: {
-      health: "/api/health",
-      auth: "/api/auth",
-      properties: "/api/properties",
-      companies: "/api/companies",
-      users: "/api/users",
-      admin: "/api/admin",
-      upload: "/api/upload",
-    },
-  });
+// Serve static files from React build (after API routes)
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+// Catch all handler: send back React's index.html file for any non-API routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // Create superadmin on startup
