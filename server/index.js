@@ -106,8 +106,8 @@ app.use(
 
 // Catch all handler: send back React's index.html file for any non-API routes
 app.get("*", (req, res) => {
-  // Make sure we don't serve index.html for API routes or asset files
-  if (req.path.startsWith("/api/") || req.path.includes(".")) {
+  // Make sure we don't serve index.html for API routes or specific static files
+  if (req.path.startsWith("/api/") || req.path.startsWith("/assets/")) {
     return res.status(404).json({ error: "Not found" });
   }
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
