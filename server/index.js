@@ -71,8 +71,11 @@ app.use("/api/users", usersRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 
-// Health check endpoint
-app.get("/", (req, res) => {
+// Serve static files from React build
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+// API Health check endpoint
+app.get("/api/health", (req, res) => {
   res.json({
     message: "Korter Clone API is running",
     status: "OK",
@@ -80,8 +83,9 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", message: "Server is running" });
+// Catch all handler: send back React's index.html file for any non-API routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // Simple ping endpoint for connectivity test
