@@ -71,9 +71,6 @@ app.use("/api/users", usersRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 
-// Serve static files from React build
-app.use(express.static(path.join(__dirname, "../client/build")));
-
 // API Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({
@@ -83,14 +80,17 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Catch all handler: send back React's index.html file for any non-API routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
-
 // Simple ping endpoint for connectivity test
 app.get("/api/auth/ping", (req, res) => {
   res.json({ status: "ok", message: "Auth ping successful" });
+});
+
+// Serve static files from React build
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+// Catch all handler: send back React's index.html file for any non-API routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 // Create superadmin on startup
