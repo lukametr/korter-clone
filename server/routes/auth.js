@@ -194,4 +194,16 @@ router.post("/debug/test", async (req, res) => {
   }
 });
 
+// Simple test endpoint
+router.get("/test", (req, res) => {
+  res.json({
+    message: "Auth route test successful",
+    jwt: process.env.JWT_SECRET ? "SET" : "MISSING",
+    mongo:
+      require("mongoose").connection.readyState === 1
+        ? "CONNECTED"
+        : "DISCONNECTED",
+  });
+});
+
 module.exports = router;
