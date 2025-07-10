@@ -30,6 +30,7 @@ router.get("/stats", auth, adminAuth, async (req, res) => {
       totalProperties,
       totalCompanies,
       activeProperties,
+      recentActivity: [], // Add empty array for now
     });
   } catch (error) {
     console.error("Get stats error:", error);
@@ -79,5 +80,22 @@ router.patch(
     }
   }
 );
+
+// Get all users for admin dashboard
+router.get("/users", auth, adminAuth, async (req, res) => {
+  try {
+    const users = await User.find({
+      role: { $in: ["company", "superadmin"] },
+    })
+      .select("-password")
+      .sort({ createdAt: -1 })
+      .limit(10); // Limit to 10 recent users for dashboard
+
+    res.json(users);
+  } catch (error) {
+    console.error("Get admin users error:", error);
+    res.status(500).json({ message: "სერვერის შეცდომა" });
+  }
+});
 
 module.exports = router;

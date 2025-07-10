@@ -20,7 +20,8 @@ interface Stats {
 
 interface User {
   _id: string;
-  name: string;
+  firstName: string;
+  lastName?: string;
   email: string;
   role: string;
   createdAt: string;
@@ -65,14 +66,16 @@ const AdminDashboard: React.FC = () => {
       setUsers([
         {
           _id: '1',
-          name: 'გიორგი მაისურაძე',
+          firstName: 'გიორგი',
+          lastName: 'მაისურაძე',
           email: 'giorgi@example.com',
-          role: 'user',
+          role: 'company',
           createdAt: '2024-01-15'
         },
         {
           _id: '2',
-          name: 'მარია ბერიძე',
+          firstName: 'მარია',
+          lastName: 'ბერიძე',
           email: 'maria@example.com',
           role: 'company',
           createdAt: '2024-01-14'
@@ -104,7 +107,7 @@ const AdminDashboard: React.FC = () => {
             ადმინის პანელი
           </h1>
           <p className="text-lg text-gray-600">
-            გამარჯობა, {user?.name}! აი თქვენი სისტემის სტატისტიკა
+            გამარჯობა, {user?.firstName || 'ადმინი'}! აი თქვენი სისტემის სტატისტიკა
           </p>
         </div>
 
@@ -205,17 +208,19 @@ const AdminDashboard: React.FC = () => {
                     <tr key={user._id} className="hover:bg-gray-50/50 transition-colors duration-200">
                       <td className="px-4 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {`${user.firstName} ${user.lastName || ''}`.trim()}
+                          </div>
                           <div className="text-sm text-gray-500">{user.email}</div>
                         </div>
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
-                          user.role === 'admin' ? 'bg-red-100 text-red-800' :
+                          user.role === 'superadmin' ? 'bg-red-100 text-red-800' :
                           user.role === 'company' ? 'bg-blue-100 text-blue-800' :
                           'bg-green-100 text-green-800'
                         }`}>
-                          {user.role === 'admin' ? 'ადმინი' :
+                          {user.role === 'superadmin' ? 'სუპერ ადმინი' :
                            user.role === 'company' ? 'კომპანია' : 'მომხმარებელი'}
                         </span>
                       </td>

@@ -1,7 +1,11 @@
 /// <reference types="vite/client" />
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || process.env.REACT_APP_API_URL || '/api';
+// For development, use localhost backend
+const API_URL = import.meta.env.VITE_API_URL || 
+  (import.meta.env.DEV ? 'http://localhost:5000/api' : '/api');
+
+console.log('API_URL configured as:', API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
@@ -33,23 +37,26 @@ api.interceptors.response.use(
 
 // Auth API
 export const loginUser = async (email: string, password: string) => {
-  const response = await api.post('/api/auth/login', { email, password });
+  console.log('Login URL:', `${API_URL}/auth/login`);
+  const response = await api.post('/auth/login', { email, password });
   return response.data;
 };
 
 export const registerUser = async (userData: any) => {
-  const response = await api.post('/api/auth/register', userData);
+  console.log('Register URL:', `${API_URL}/auth/register`);
+  const response = await api.post('/auth/register', userData);
   return response.data;
 };
 
 export const getCurrentUser = async () => {
-  const response = await api.get('/api/auth/me');
+  const response = await api.get('/auth/me');
   return response.data;
 };
 
 // Properties API
 export const getProperties = async (filters?: any) => {
-  const response = await api.get('/api/properties', { params: filters });
+  console.log('Properties URL:', `${API_URL}/properties`);
+  const response = await api.get('/properties', { params: filters });
   console.log('API Response:', response.data);
   
   // Extract properties array from response
@@ -74,44 +81,44 @@ export const getProperties = async (filters?: any) => {
 };
 
 export const getProperty = async (id: string) => {
-  const response = await api.get(`/api/properties/${id}`);
+  const response = await api.get(`/properties/${id}`);
   return response.data;
 };
 
 export const createProperty = async (propertyData: any) => {
-  const response = await api.post('/api/properties', propertyData);
+  const response = await api.post('/properties', propertyData);
   return response.data;
 };
 
 export const updateProperty = async (id: string, propertyData: any) => {
-  const response = await api.put(`/api/properties/${id}`, propertyData);
+  const response = await api.put(`/properties/${id}`, propertyData);
   return response.data;
 };
 
 export const deleteProperty = async (id: string) => {
-  const response = await api.delete(`/api/properties/${id}`);
+  const response = await api.delete(`/properties/${id}`);
   return response.data;
 };
 
 // Companies API
 export const getCompanies = async () => {
-  const response = await api.get('/api/companies');
+  const response = await api.get('/companies');
   return response.data;
 };
 
 export const createCompany = async (companyData: any) => {
-  const response = await api.post('/api/companies', companyData);
+  const response = await api.post('/companies', companyData);
   return response.data;
 };
 
 // Admin API
 export const getAdminStats = async () => {
-  const response = await api.get('/api/admin/stats');
+  const response = await api.get('/admin/stats');
   return response.data;
 };
 
 export const getAdminUsers = async () => {
-  const response = await api.get('/api/admin/users');
+  const response = await api.get('/admin/users');
   return response.data;
 };
 
@@ -120,7 +127,7 @@ export const uploadFile = async (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
   
-  const response = await api.post('/api/upload', formData, {
+  const response = await api.post('/upload', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

@@ -3,11 +3,10 @@ import { loginUser, registerUser, getCurrentUser } from '../services/api';
 
 interface User {
   _id: string;
-  name?: string;
-  firstName?: string;
+  firstName: string;
   lastName?: string;
   email: string;
-  role: 'user' | 'company' | 'admin' | 'superadmin';
+  role: 'company' | 'superadmin';
   company?: any; // accept object or string
 }
 

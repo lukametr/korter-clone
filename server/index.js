@@ -86,10 +86,30 @@ app.get("/api/auth/ping", (req, res) => {
 });
 
 // Serve static files from React build (after API routes)
-app.use(express.static(path.join(__dirname, "../client/build")));
+app.use(
+  express.static(path.join(__dirname, "../client/build"), {
+    setHeaders: (res, path) => {
+      // Set proper MIME types for JavaScript modules
+      if (path.endsWith(".js")) {
+        res.set("Content-Type", "application/javascript");
+      } else if (path.endsWith(".mjs")) {
+        res.set("Content-Type", "application/javascript");
+      } else if (path.endsWith(".css")) {
+        res.set("Content-Type", "text/css");
+      }
+      // Enable CORS for all static files
+      res.set("Access-Control-Allow-Origin", "*");
+      res.set("Cross-Origin-Resource-Policy", "cross-origin");
+    },
+  })
+);
 
 // Catch all handler: send back React's index.html file for any non-API routes
 app.get("*", (req, res) => {
+  // Make sure we don't serve index.html for API routes or asset files
+  if (req.path.startsWith("/api/") || req.path.includes(".")) {
+    return res.status(404).json({ error: "Not found" });
+  }
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 

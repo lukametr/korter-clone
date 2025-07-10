@@ -105,7 +105,7 @@ const Navigation: React.FC = () => {
                       {user.firstName ? `${user.firstName} ${user.lastName || ''}` : 'მომხმარებელი'}
                     </div>
                     <div className="text-xs md:text-sm text-gray-500">
-                      {user.role === 'admin' ? 'ადმინისტრატორი' : 'მომხმარებელი'}
+                      {user.role === 'superadmin' ? 'ადმინისტრატორი' : 'კომპანია'}
                     </div>
                   </div>
                 </button>
@@ -129,7 +129,7 @@ const Navigation: React.FC = () => {
                       პროფილი
                     </Link>
                     
-                    {user.role === 'admin' && (
+                    {user.role === 'superadmin' && (
                       <Link
                         to="/admin"
                         className="flex items-center px-4 py-2 md:py-3 text-sm md:text-base text-gray-700 hover:bg-gray-50 transition-colors"
