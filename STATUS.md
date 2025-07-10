@@ -35,33 +35,44 @@
 - **Package.json**: Production start script გამოსწორდა
 - **სტატუსი**: ✅ **RESOLVED**
 
-## 📋 რა დარჩა თქვენს გასაკეთებელ
+## � რა დარჩა თქვენს გასაკეთებელ - URGENT ISSUE
 
-### 1. Backend Deployment (5-10 წუთი)
+### PROBLEM IDENTIFIED: MongoDB Connection Error
 
-1. **Vercel.com-ზე** შედით
-2. **New Project** → GitHub repository → **korter-clone**
-3. **Root Directory** შეცვალეთ **"server"**-ზე
-4. **Environment Variables** დაამატეთ:
+✅ **API URL Duplication FIXED** - Frontend ახლა სწორად უკავშირდება  
+❌ **Production Database Issue** - Backend-ი ვერ უკავშირდება MongoDB-ს
+
+**Error**: All `/api/properties`, `/api/auth/login` endpoints return 500 error
+
+### 🚨 IMMEDIATE ACTION (10 წუთი)
+
+1. **Debug Production Issue**:
+
+   ```bash
+   curl https://www.homeinfo.ge/api/debug/db
+   curl https://www.homeinfo.ge/api/debug/env
    ```
-   MONGODB_URI=mongodb+srv://...
-   JWT_SECRET=your_64_char_secret
+
+2. **MongoDB Atlas Setup**:
+
+   - mongodb.com/atlas → Create account & cluster
+   - Get connection string: `mongodb+srv://user:pass@cluster.mongodb.net/`
+   - Set in production environment variables
+
+3. **Update Production Environment**:
+
+   ```env
+   MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/korter_production
+   JWT_SECRET=your_64_character_secret_key
    NODE_ENV=production
-   CORS_ORIGIN=https://your-frontend-domain.vercel.app
+   CORS_ORIGIN=https://www.homeinfo.ge
    ```
 
-### 2. MongoDB Atlas Setup (5 წუთი)
+4. **Redeploy Backend** to pick up new environment variables
 
-1. **mongodb.com/atlas** → Account registration
-2. **Cluster შექმნა** → Database user შექმნა
-3. **Network Access** → თქვენი IP whitelist-ში
-4. **Connection String** → `MONGODB_URI`-ში ჩაყენება
+**GUIDE**: See `PRODUCTION_500_ERROR_FIX.md` for detailed steps
 
-### 3. Frontend Redeploy (ავტომატური)
-
-- GitHub-ზე ყველაფერი უკვე აიტვირთა
-- Vercel ავტომატურად აიღებს ახალ build-ს
-- Cache გაწმენდა: `Ctrl + Shift + R`
+### 📋 Other Tasks (After MongoDB Fix)
 
 ## 🎉 შედეგი
 
