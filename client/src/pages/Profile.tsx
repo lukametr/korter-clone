@@ -76,7 +76,7 @@ const Profile: React.FC = () => {
   const fetchProperties = async (companyId: string) => {
     setLoading(true);
     try {
-      const res = await api.get(`/api/properties/company/${companyId}`);
+      const res = await api.get(`/properties/company/${companyId}`);
       console.log('fetchProperties response:', res.data);
       setProperties(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
@@ -89,7 +89,7 @@ const Profile: React.FC = () => {
   const fetchAllProperties = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/api/properties');
+      const res = await api.get('/properties');
       console.log('fetchAllProperties response:', res.data);
       // API აბრუნებს object-ს properties ველით
       const propertiesData = res.data.properties || res.data;
@@ -113,7 +113,7 @@ const Profile: React.FC = () => {
     const formData = new FormData();
     imageFiles.forEach((file) => formData.append('images', file));
     try {
-      const res = await api.post('/api/upload/images', formData, {
+      const res = await api.post('/upload/images', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setForm((prev) => ({
@@ -170,9 +170,9 @@ const Profile: React.FC = () => {
         bathrooms: form.bathrooms ? Number(form.bathrooms) : undefined,
       };
       if (editId) {
-        await api.put(`/api/properties/${editId}`, payload);
+        await api.put(`/properties/${editId}`, payload);
       } else {
-        await api.post('/api/properties', payload);
+        await api.post('/properties', payload);
       }
       setShowForm(false);
       setForm({ images: [] });
@@ -199,7 +199,7 @@ const Profile: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     if (window.confirm('ნამდვილად გსურთ წაშლა?')) {
-      await api.delete(`/api/properties/${id}`);
+      await api.delete(`/properties/${id}`);
       if (user?.company && isCompanyObj(user.company)) {
         fetchProperties(user.company._id);
       } else if (user?.role === 'superadmin') {
