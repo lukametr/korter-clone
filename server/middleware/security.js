@@ -10,8 +10,30 @@ const limiter = rateLimit({
 });
 
 module.exports = (app) => {
-  // Security middleware
-  app.use(helmet()); // Set security HTTP headers
+  // Security middleware with CSP configuration
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          scriptSrc: ["'self'"],
+          imgSrc: [
+            "'self'",
+            "data:",
+            "https://images.unsplash.com",
+            "https://res.cloudinary.com",
+            "https://*.cloudinary.com",
+          ],
+          connectSrc: ["'self'"],
+          fontSrc: ["'self'"],
+          objectSrc: ["'none'"],
+          mediaSrc: ["'self'"],
+          frameSrc: ["'none'"],
+        },
+      },
+    })
+  );
   app.use(sanitize()); // Data sanitization against NoSQL query injection
   app.use(xss()); // Data sanitization against XSS
   app.use("/api", limiter); // Apply rate limiting to all API routes
