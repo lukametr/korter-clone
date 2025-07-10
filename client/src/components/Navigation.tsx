@@ -45,7 +45,7 @@ const Navigation: React.FC = () => {
               alt="Logo"
               className="w-32 h-32 md:w-40 md:h-40 object-contain"
             />
-            <span className="text-xl md:text-2xl font-bold text-gray-900">vako.ge</span>
+            <span className="text-xl md:text-2xl font-bold text-gray-900">homeinfo.ge</span>
           </Link>
 
           {/* Desktop Navigation */}
