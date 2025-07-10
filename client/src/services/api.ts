@@ -50,22 +50,27 @@ export const getCurrentUser = async () => {
 // Properties API
 export const getProperties = async (filters?: any) => {
   const response = await api.get('/api/properties', { params: filters });
-  const properties = response.data.properties || response.data;
+  console.log('API Response:', response.data);
   
-  // Fix image URLs by adding server base URL
-  if (Array.isArray(properties)) {
-    return properties.map((property: any) => ({
-      ...property,
-      mainImage: property.mainImage?.startsWith('/uploads') 
-        ? `${API_URL}${property.mainImage}` 
-        : property.mainImage,
-      images: property.images?.map((img: string) => 
-        img.startsWith('/uploads') ? `${API_URL}${img}` : img
-      ) || []
-    }));
+  // Extract properties array from response
+  let properties = response.data.properties || response.data;
+  
+  // Ensure we always return an array
+  if (!Array.isArray(properties)) {
+    console.warn('Properties data is not an array:', properties);
+    return [];
   }
   
-  return properties;
+  // Fix image URLs by adding server base URL
+  return properties.map((property: any) => ({
+    ...property,
+    mainImage: property.mainImage?.startsWith('/uploads') 
+      ? `${API_URL}${property.mainImage}` 
+      : property.mainImage,
+    images: property.images?.map((img: string) => 
+      img.startsWith('/uploads') ? `${API_URL}${img}` : img
+    ) || []
+  }));
 };
 
 export const getProperty = async (id: string) => {

@@ -163,8 +163,15 @@ const Home: React.FC = () => {
       try {
         setLoading(true);
         const data = await getProperties();
-        // Take only first 6 properties for featured section
-        setFeaturedProperties(data.slice(0, 6));
+        console.log('Featured properties data:', data);
+        
+        // Ensure data is an array before using slice
+        if (Array.isArray(data)) {
+          setFeaturedProperties(data.slice(0, 6));
+        } else {
+          console.warn('Properties data is not an array:', data);
+          setFeaturedProperties([]);
+        }
       } catch (error) {
         console.error('Error fetching properties:', error);
         setFeaturedProperties([]);
