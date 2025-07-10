@@ -111,7 +111,17 @@ const createSuperAdmin = async () => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+
+// For Vercel
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    createSuperAdmin();
+  });
+} else {
+  // For production (Vercel), just call createSuperAdmin
   createSuperAdmin();
-});
+}
+
+// Export for Vercel
+module.exports = app;
