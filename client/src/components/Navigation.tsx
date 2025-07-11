@@ -51,25 +51,25 @@ const Navigation: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             <Link
-              to="/"
+              to="/properties?type=apartment"
               className="flex items-center px-3 md:px-4 py-2 md:py-3 text-sm md:text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
             >
               <Home className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              მთავარი
+              ბინები
             </Link>
             <Link
-              to="/properties"
+              to="/properties?type=house"
               className="flex items-center px-3 md:px-4 py-2 md:py-3 text-sm md:text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
             >
               <Building className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              უძრავი ქონება
+              კოტეჯები
             </Link>
             <Link
               to="/properties?type=office"
               className="flex items-center px-3 md:px-4 py-2 md:py-3 text-sm md:text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
             >
               <OfficeIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              ოფისები
+              კომერციული ფართები
             </Link>
           </div>
 

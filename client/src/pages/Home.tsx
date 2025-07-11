@@ -325,7 +325,7 @@ const Home: React.FC = () => {
             </div>
             <div className="bg-white rounded-xl p-6 md:p-8 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <Building className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">სახლები</h3>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">კოტეჯები</h3>
               <p className="text-gray-600 mb-4 md:mb-6">კომფორტული სახლები ოჯახისთვის</p>
               <Link to="/properties" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
                 ნახვა →
@@ -333,7 +333,7 @@ const Home: React.FC = () => {
             </div>
             <div className="bg-white rounded-xl p-6 md:p-8 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <OfficeIcon className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">ოფისები</h3>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">კომერციული ფართები</h3>
               <p className="text-gray-600 mb-4 md:mb-6">კომერციული ფართები ბიზნესისთვის</p>
               <Link to="/properties" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
                 ნახვა →
