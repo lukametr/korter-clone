@@ -226,31 +226,11 @@ const Home: React.FC = () => {
                   <p className="text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 opacity-90 max-w-3xl mx-auto">{slide.subtitle}</p>
                   
                   {/* Search Panel */}
-                  <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-100 max-w-5xl mx-auto">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                        <input
-                          type="text"
-                          placeholder={t.search.searchByAddress}
-                          className="w-full pl-10 pr-4 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900"
-                        />
-                      </div>
-                      <div className="relative">
-                        <select className="w-full pl-4 pr-10 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-gray-900">
-                          <option>{t.search.price}</option>
-                          <option>100,000 - 200,000 ₾</option>
-                          <option>200,000 - 400,000 ₾</option>
-                          <option>400,000+ ₾</option>
-                        </select>
-                      </div>
-                      <div className="lg:col-span-2">
-                        <button className="w-full bg-blue-600 text-white py-3 md:py-4 px-6 md:px-8 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
-                          <Map size={20} />
-                          მოძებნა რუკაზე
-                        </button>
-                      </div>
-                    </div>
+                  <div className="max-w-md mx-auto">
+                    <button className="w-full bg-white/95 backdrop-blur-sm text-gray-900 py-4 px-6 rounded-xl font-semibold hover:bg-white transition-all duration-300 shadow-xl hover:shadow-2xl flex items-center justify-center gap-3 border border-gray-200">
+                      <Map size={24} />
+                      <span className="text-lg">მოძებნა რუკაზე</span>
+                    </button>
                   </div>
                 </div>
               </div>
