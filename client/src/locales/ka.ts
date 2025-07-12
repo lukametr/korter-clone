@@ -48,8 +48,12 @@ export const ka = {
     propertyTypes: "უძრავი ქონების ტიპები",
     propertyTypesSubtitle: "აირჩიეთ თქვენთვის შესაფერისი ტიპი",
     apartments: "ბინები",
+    apartmentsDesc: "იპოვეთ თქვენი იდეალური ბინა",
     houses: "კოტეჯები", 
-    commercial: "კომერციული ფართები"
+    housesDesc: "კომფორტული სახლები ოჯახისთვის",
+    commercial: "კომერციული ფართები",
+    commercialDesc: "კომერციული ფართები ბიზნესისთვის",
+    viewMore: "ნახვა →"
   },
 
   // Properties page

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 import { 
   Search, 
   MapPin, 
@@ -44,6 +45,7 @@ interface Property {
 }
 
 const Home: React.FC = () => {
+  const { t } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,20 +54,20 @@ const Home: React.FC = () => {
   const heroSlides = [
     {
       id: 1,
-      title: "იპოვეთ თქვენი იდეალური სახლი",
-      subtitle: "თბილისის საუკეთესო უძრავი ქონება",
+      title: t.home.heroTitle1,
+      subtitle: t.home.heroSubtitle1,
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80"
     },
     {
       id: 2,
-      title: "ქირავდება და იყიდება",
-      subtitle: "ყველა ტიპის უძრავი ქონება",
+      title: t.home.heroTitle2,
+      subtitle: t.home.heroSubtitle2,
       image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
     },
     {
       id: 3,
-      title: "პროფესიონალური მომსახურება",
-      subtitle: "სანდო და გამოცდილი ბროკერები",
+      title: t.home.heroTitle3,
+      subtitle: t.home.heroSubtitle3,
       image: "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
     }
   ];
@@ -270,7 +272,7 @@ const Home: React.FC = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                 <input
                   type="text"
-                  placeholder="მისამართი ან უბანი"
+                  placeholder={t.search.searchByAddress}
                   className="w-full pl-10 pr-4 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 />
               </div>
@@ -292,14 +294,14 @@ const Home: React.FC = () => {
               </div> */}
               <div className="relative">
                 <select className="w-full pl-4 pr-10 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
-                  <option>ფასი</option>
+                  <option>{t.search.price}</option>
                   <option>100,000 - 200,000 ₾</option>
                   <option>200,000 - 400,000 ₾</option>
                   <option>400,000+ ₾</option>
                 </select>
               </div>
               <button className="bg-blue-600 text-white py-3 md:py-4 px-6 md:px-8 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg">
-                ძიება
+                {t.search.search}
               </button>
             </div>
           </div>
@@ -310,33 +312,33 @@ const Home: React.FC = () => {
       <section className="py-16 md:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">უძრავი ქონების ტიპები</h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">აირჩიეთ თქვენთვის შესაფერისი ტიპი</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t.home.propertyTypes}</h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">{t.home.propertyTypesSubtitle}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <div className="bg-white rounded-xl p-6 md:p-8 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <HomeIcon className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">ბინები</h3>
-              <p className="text-gray-600 mb-4 md:mb-6">იპოვეთ თქვენი იდეალური ბინა</p>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">{t.home.apartments}</h3>
+              <p className="text-gray-600 mb-4 md:mb-6">{t.home.apartmentsDesc}</p>
               <Link to="/properties" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                ნახვა →
+                {t.home.viewMore}
               </Link>
             </div>
             <div className="bg-white rounded-xl p-6 md:p-8 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <Building className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">კოტეჯები</h3>
-              <p className="text-gray-600 mb-4 md:mb-6">კომფორტული სახლები ოჯახისთვის</p>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">{t.home.houses}</h3>
+              <p className="text-gray-600 mb-4 md:mb-6">{t.home.housesDesc}</p>
               <Link to="/properties" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                ნახვა →
+                {t.home.viewMore}
               </Link>
             </div>
             <div className="bg-white rounded-xl p-6 md:p-8 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <OfficeIcon className="w-12 h-12 md:w-16 md:h-16 text-blue-600 mx-auto mb-4" />
-              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">კომერციული ფართები</h3>
-              <p className="text-gray-600 mb-4 md:mb-6">კომერციული ფართები ბიზნესისთვის</p>
+              <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-2">{t.home.commercial}</h3>
+              <p className="text-gray-600 mb-4 md:mb-6">{t.home.commercialDesc}</p>
               <Link to="/properties" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
-                ნახვა →
+                {t.home.viewMore}
               </Link>
             </div>
           </div>

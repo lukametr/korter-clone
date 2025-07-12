@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 import { Heart, MapPin, Bed, Bath, Square } from 'lucide-react';
 
 interface Property {
@@ -28,6 +30,7 @@ interface Property {
 }
 
 const Favorites: React.FC = () => {
+  const { t } = useLanguage();
   const [favorites, setFavorites] = useState<Property[]>([]);
 
   useEffect(() => {

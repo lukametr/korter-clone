@@ -48,8 +48,12 @@ export const en = {
     propertyTypes: "Property Types",
     propertyTypesSubtitle: "Choose the type that suits you",
     apartments: "Apartments",
+    apartmentsDesc: "Find your ideal apartment",
     houses: "Houses", 
-    commercial: "Commercial Properties"
+    housesDesc: "Comfortable homes for families",
+    commercial: "Commercial Properties",
+    commercialDesc: "Commercial spaces for business",
+    viewMore: "View →"
   },
 
   // Properties page
