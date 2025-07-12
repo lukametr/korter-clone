@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 import { 
   Search, 
   MapPin, 
@@ -38,6 +39,7 @@ interface Property {
 
 const Properties: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const { t } = useLanguage();
   const [properties, setProperties] = useState<Property[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);

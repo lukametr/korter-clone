@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { 
   Menu, 
   X, 
@@ -19,6 +20,7 @@ import {
 
 const Navigation: React.FC = () => {
   const { user, logout } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -55,10 +57,10 @@ const Navigation: React.FC = () => {
     setIsSearchOpen(!isSearchOpen);
   };
 
-  const handleLanguageChange = (language: string) => {
-    setCurrentLanguage(language);
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage as 'ka' | 'en');
+    setCurrentLanguage(newLanguage);
     setIsLanguageMenuOpen(false);
-    // TODO: Implement language switching logic
   };
 
   const handleCitySearch = () => {
@@ -102,21 +104,21 @@ const Navigation: React.FC = () => {
               className="flex items-center px-3 md:px-4 py-2 md:py-3 text-sm md:text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
             >
               <Home className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              ბინები
+              {t.nav.apartments}
             </Link>
             <Link
               to="/properties?type=house"
               className="flex items-center px-3 md:px-4 py-2 md:py-3 text-sm md:text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
             >
               <Building className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              კოტეჯები
+              {t.nav.houses}
             </Link>
             <Link
               to="/properties?type=office"
               className="flex items-center px-3 md:px-4 py-2 md:py-3 text-sm md:text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
             >
               <OfficeIcon className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-              კომერციული ფართები
+              {t.nav.commercial}
             </Link>
           </div>
 
@@ -137,14 +139,14 @@ const Navigation: React.FC = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="მოძებნე პროექტის დასახელებით..."
+                  placeholder={t.search.searchByTitle}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 />
                 <button
                   onClick={handleSearch}
                   className="mt-2 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-all duration-200"
                 >
-                  ძიება
+                  {t.search.search}
                 </button>
               </div>
             )}
@@ -172,14 +174,14 @@ const Navigation: React.FC = () => {
                   type="text"
                   value={cityQuery}
                   onChange={(e) => setCityQuery(e.target.value)}
-                  placeholder="მოძებნე ქალაქი..."
+                  placeholder={t.search.searchByCity}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                 />
                 <button
                   onClick={handleCitySearch}
                   className="mt-2 w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-all duration-200"
                 >
-                  ძიება
+                  {t.search.search}
                 </button>
               </div>
             )}
@@ -198,18 +200,18 @@ const Navigation: React.FC = () => {
                 <button
                   onClick={() => handleLanguageChange('ka')}
                   className={`w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors ${
-                    currentLanguage === 'ka' ? 'bg-purple-50 text-purple-600' : 'text-gray-700'
+                    language === 'ka' ? 'bg-purple-50 text-purple-600' : 'text-gray-700'
                   }`}
                 >
-                  🇬🇪 ქართული
+                  🇬🇪 {t.languages.georgian}
                 </button>
                 <button
                   onClick={() => handleLanguageChange('en')}
                   className={`w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors ${
-                    currentLanguage === 'en' ? 'bg-purple-50 text-purple-600' : 'text-gray-700'
+                    language === 'en' ? 'bg-purple-50 text-purple-600' : 'text-gray-700'
                   }`}
                 >
-                  🇺🇸 English
+                  🇺🇸 {t.languages.english}
                 </button>
               </div>
             )}
@@ -236,10 +238,10 @@ const Navigation: React.FC = () => {
                   </div>
                   <div className="hidden lg:block text-left">
                     <div className="text-sm md:text-base font-medium text-gray-900">
-                      {user.firstName ? `${user.firstName} ${user.lastName || ''}` : 'მომხმარებელი'}
+                      {user.firstName ? `${user.firstName} ${user.lastName || ''}` : t.roles.user}
                     </div>
                     <div className="text-xs md:text-sm text-gray-500">
-                      {user.role === 'superadmin' ? 'ადმინისტრატორი' : 'კომპანია'}
+                      {user.role === 'superadmin' ? t.roles.administrator : t.roles.company}
                     </div>
                   </div>
                 </button>
@@ -249,7 +251,7 @@ const Navigation: React.FC = () => {
                   <div className="absolute right-0 mt-2 w-48 md:w-56 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50">
                     <div className="px-4 py-3 border-b border-gray-100">
                       <div className="text-sm font-medium text-gray-900">
-                        {user.firstName ? `${user.firstName} ${user.lastName || ''}` : 'მომხმარებელი'}
+                        {user.firstName ? `${user.firstName} ${user.lastName || ''}` : t.roles.user}
                       </div>
                       <div className="text-xs text-gray-500">{user.email}</div>
                     </div>
@@ -260,7 +262,7 @@ const Navigation: React.FC = () => {
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <User className="w-4 h-4 md:w-5 md:h-5 mr-3" />
-                      პროფილი
+                      {t.nav.profile}
                     </Link>
                     
                     {user.role === 'superadmin' && (
@@ -270,7 +272,7 @@ const Navigation: React.FC = () => {
                         onClick={() => setIsUserMenuOpen(false)}
                       >
                         <Settings className="w-4 h-4 md:w-5 md:h-5 mr-3" />
-                        ადმინ პანელი
+                        {t.nav.adminPanel}
                       </Link>
                     )}
                     
@@ -279,7 +281,7 @@ const Navigation: React.FC = () => {
                       className="flex items-center w-full px-4 py-2 md:py-3 text-sm md:text-base text-red-600 hover:bg-red-50 transition-colors"
                     >
                       <LogOut className="w-4 h-4 md:w-5 md:h-5 mr-3" />
-                      გასვლა
+                      {t.nav.logout}
                     </button>
                   </div>
                 )}
@@ -290,13 +292,13 @@ const Navigation: React.FC = () => {
                   to="/login"
                   className="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base font-medium text-gray-700 hover:text-blue-600 transition-colors"
                 >
-                  შესვლა
+                  {t.nav.login}
                 </Link>
                 <Link
                   to="/register"
                   className="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
                 >
-                  რეგისტრაცია
+                  {t.nav.register}
                 </Link>
               </div>
             )}
@@ -328,7 +330,7 @@ const Navigation: React.FC = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Home className="w-5 h-5 mr-3" />
-                მთავარი
+                {t.nav.home}
               </Link>
               <Link
                 to="/properties"
@@ -336,7 +338,7 @@ const Navigation: React.FC = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Building className="w-5 h-5 mr-3" />
-                უძრავი ქონება
+                {t.nav.properties}
               </Link>
               <Link
                 to="/properties?type=office"
@@ -344,7 +346,7 @@ const Navigation: React.FC = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <OfficeIcon className="w-5 h-5 mr-3" />
-                ოფისები
+                {t.nav.offices}
               </Link>
             </div>
 
@@ -352,7 +354,7 @@ const Navigation: React.FC = () => {
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <div className="px-4 py-3">
                   <div className="text-sm font-medium text-gray-900">
-                    {user.firstName ? `${user.firstName} ${user.lastName || ''}` : 'მომხმარებელი'}
+                    {user.firstName ? `${user.firstName} ${user.lastName || ''}` : t.roles.user}
                   </div>
                   <div className="text-xs text-gray-500">{user.email}</div>
                 </div>
@@ -363,7 +365,7 @@ const Navigation: React.FC = () => {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <User className="w-5 h-5 mr-3" />
-                  პროფილი
+                  {t.nav.profile}
                 </Link>
                 {/* გასვლა */}
                 <button
@@ -371,7 +373,7 @@ const Navigation: React.FC = () => {
                   className="flex items-center w-full px-4 py-3 text-base text-red-600 hover:bg-red-50 transition-colors"
                 >
                   <LogOut className="w-5 h-5 mr-3" />
-                  გასვლა
+                  {t.nav.logout}
                 </button>
               </div>
             ) : (
@@ -381,14 +383,14 @@ const Navigation: React.FC = () => {
                   className="block px-4 py-3 text-base font-medium text-gray-700 hover:text-blue-600 transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  შესვლა
+                  {t.nav.login}
                 </Link>
                 <Link
                   to="/register"
                   className="block mx-4 px-4 py-3 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200 text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  რეგისტრაცია
+                  {t.nav.register}
                 </Link>
               </div>
             )}
