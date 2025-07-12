@@ -227,7 +227,7 @@ const Home: React.FC = () => {
                     to="/properties"
                     className="inline-block bg-white text-gray-900 px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 text-base md:text-lg shadow-lg hover:shadow-xl"
                   >
-                    უძრავი ქონების ძიება
+                    {t.home.searchProperties}
                   </Link>
                 </div>
               </div>
@@ -349,8 +349,8 @@ const Home: React.FC = () => {
       <section className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">პოპულარული კომპლექსები</h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">იპოვეთ თქვენი იდეალური სახლი</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t.home.popularComplexes}</h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">{t.home.findYourDreamHome}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -387,14 +387,14 @@ const Home: React.FC = () => {
                     {/* New Badge */}
                     {isNew && (
                       <div className="absolute top-3 md:top-4 right-3 md:right-4 bg-green-500 text-white px-2 py-1 rounded-lg text-xs font-semibold shadow-lg">
-                        ახალი
+                        {t.home.newBadge}
                       </div>
                     )}
 
                     {/* Type Badge */}
                     <div className="absolute top-3 md:top-4 left-3 md:left-4 bg-blue-600 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium">
-                      {property.transactionType === 'sale' ? 'იყიდება' : 
-                       property.transactionType === 'rent' ? 'ქირავდება' : 
+                      {property.transactionType === 'sale' ? t.search.forSale : 
+                       property.transactionType === 'rent' ? t.search.forRent : 
                        property.transactionType}
                     </div>
 
@@ -431,7 +431,7 @@ const Home: React.FC = () => {
                         )}
                         <div className="flex items-center">
                           <Square size={16} className="mr-1" />
-                          <span>{property.area}მ²</span>
+                          <span>{property.area} {t.properties.sqm}</span>
                         </div>
                       </div>
                     </div>
@@ -445,9 +445,9 @@ const Home: React.FC = () => {
                       {/* Owner/Company Info */}
                       <div className="text-xs text-gray-500">
                         {property.company ? (
-                          <span>კომპანია: {property.company.name}</span>
+                          <span>{t.properties.company}: {property.company.name}</span>
                         ) : property.owner ? (
-                          <span>მესაკუთრე: {property.owner.firstName} {property.owner.lastName}</span>
+                          <span>{t.properties.owner}: {property.owner.firstName} {property.owner.lastName}</span>
                         ) : null}
                       </div>
                       
@@ -455,7 +455,7 @@ const Home: React.FC = () => {
                         to={`/properties`}
                         className="text-blue-600 font-semibold hover:text-blue-700 transition-colors text-sm md:text-base"
                       >
-                        დეტალები →
+                        {t.home.details}
                       </Link>
                     </div>
                   </div>
@@ -470,7 +470,7 @@ const Home: React.FC = () => {
               to="/properties"
               className="inline-flex items-center bg-blue-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 text-base md:text-lg shadow-md hover:shadow-lg"
             >
-              ყველა უძრავი ქონების ნახვა
+              {t.home.viewAllProperties}
               <ChevronRight size={20} className="ml-2" />
             </Link>
           </div>
@@ -483,19 +483,19 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
             <div>
               <div className="text-3xl md:text-4xl font-bold mb-2">1,250+</div>
-              <div className="text-blue-100 text-sm md:text-base">გაყიდული ობიექტი</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.home.soldProperties}</div>
             </div>
             <div>
               <div className="text-3xl md:text-4xl font-bold mb-2">850+</div>
-              <div className="text-blue-100 text-sm md:text-base">კმაყოფილი კლიენტი</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.home.satisfiedClients}</div>
             </div>
             <div>
               <div className="text-3xl md:text-4xl font-bold mb-2">15+</div>
-              <div className="text-blue-100 text-sm md:text-base">წლიანი გამოცდილება</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.home.yearsExperience}</div>
             </div>
             <div>
               <div className="text-3xl md:text-4xl font-bold mb-2">98%</div>
-              <div className="text-blue-100 text-sm md:text-base">კმაყოფილების მაჩვენებელი</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.home.satisfactionRate}</div>
             </div>
           </div>
         </div>

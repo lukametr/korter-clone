@@ -53,7 +53,17 @@ export const en = {
     housesDesc: "Comfortable homes for families",
     commercial: "Commercial Properties",
     commercialDesc: "Commercial spaces for business",
-    viewMore: "View →"
+    viewMore: "View →",
+    searchProperties: "Search Properties",
+    popularComplexes: "Popular Complexes",
+    findYourDreamHome: "Find Your Dream Home",
+    viewAllProperties: "View All Properties",
+    newBadge: "New",
+    details: "Details →",
+    soldProperties: "Properties Sold",
+    satisfiedClients: "Satisfied Clients", 
+    yearsExperience: "Years of Experience",
+    satisfactionRate: "Satisfaction Rate"
   },
 
   // Properties page
@@ -128,7 +138,8 @@ export const en = {
     testAccount: "Test Account",
     useForTesting: "Use for testing:",
     emailLabel: "Email:",
-    passwordLabel: "Password:"
+    passwordLabel: "Password:",
+    createYourCompany: "Create Your Company"
   },
 
   // User roles

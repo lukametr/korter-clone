@@ -53,7 +53,17 @@ export const ka = {
     housesDesc: "კომფორტული სახლები ოჯახისთვის",
     commercial: "კომერციული ფართები",
     commercialDesc: "კომერციული ფართები ბიზნესისთვის",
-    viewMore: "ნახვა →"
+    viewMore: "ნახვა →",
+    searchProperties: "უძრავი ქონების ძიება",
+    popularComplexes: "პოპულარული კომპლექსები",
+    findYourDreamHome: "იპოვეთ თქვენი იდეალური სახლი",
+    viewAllProperties: "ყველა უძრავი ქონების ნახვა",
+    newBadge: "ახალი",
+    details: "დეტალები →",
+    soldProperties: "გაყიდული ობიექტი",
+    satisfiedClients: "კმაყოფილი კლიენტი", 
+    yearsExperience: "წლიანი გამოცდილება",
+    satisfactionRate: "კმაყოფილების მაჩვენებელი"
   },
 
   // Properties page
@@ -128,7 +138,8 @@ export const ka = {
     testAccount: "ტესტ ანგარიში",
     useForTesting: "გამოიყენეთ ტესტირებისთვის:",
     emailLabel: "ელფოსტა:",
-    passwordLabel: "პაროლი:"
+    passwordLabel: "პაროლი:",
+    createYourCompany: "შექმენით თქვენი კომპანია"
   },
 
   // User roles

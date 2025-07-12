@@ -63,15 +63,15 @@ const Register: React.FC = () => {
           </div>
         </div>
         <h2 className="text-center text-3xl font-bold text-gray-900 mb-2">
-          რეგისტრაცია
+          {t.auth.signUp}
         </h2>
         <p className="text-center text-lg text-gray-600 mb-8">
-          შექმენით თქვენი კომპანია
+          {t.auth.createYourCompany}
         </p>
         <p className="text-center text-sm text-gray-500">
-          უკვე გაქვთ ანგარიში?{' '}
+          {t.auth.haveAccount}{' '}
           <Link to="/login" className="font-semibold text-blue-600 hover:text-blue-500 transition-colors duration-200">
-            შედით
+            {t.auth.signIn}
           </Link>
         </p>
       </div>
