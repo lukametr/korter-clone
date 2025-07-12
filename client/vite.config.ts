@@ -18,10 +18,10 @@ export default defineConfig({
     outDir: 'build',
     rollupOptions: {
       output: {
-        // Ensure proper file naming for cache busting
-        entryFileNames: `assets/[name].[hash].js`,
-        chunkFileNames: `assets/[name].[hash].js`,
-        assetFileNames: `assets/[name].[hash].[ext]`
+        // Force new filenames to break cache
+        entryFileNames: `assets/[name].[hash]-${Date.now()}.js`,
+        chunkFileNames: `assets/[name].[hash]-${Date.now()}.js`,
+        assetFileNames: `assets/[name].[hash]-${Date.now()}.[ext]`
       }
     }
   },
