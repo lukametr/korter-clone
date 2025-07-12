@@ -52,12 +52,12 @@ const Favorites: React.FC = () => {
       <div className="min-h-screen bg-gray-50 py-16">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <Heart className="w-16 h-16 text-gray-300 mx-auto mb-6" />
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">ფავორიტები</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">{t.favorites.title}</h1>
           <p className="text-gray-600 text-lg">
-            თქვენ ჯერ არ გაქვთ შენახული პროექტები
+            {t.favorites.noFavorites}
           </p>
           <p className="text-gray-500 mt-2">
-            მოძებნეთ საინტერესო პროექტები და დაამატეთ ფავორიტებში
+            {t.favorites.noFavoritesDesc}
           </p>
         </div>
       </div>
@@ -69,10 +69,10 @@ const Favorites: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            ჩემი ფავორიტები
+            {t.favorites.title}
           </h1>
           <p className="text-lg text-gray-600">
-            {favorites.length} შენახული პროექტი
+            {favorites.length} {t.common.properties}
           </p>
         </div>
 
@@ -100,8 +100,8 @@ const Favorites: React.FC = () => {
 
                 {/* Type Badge */}
                 <div className="absolute top-3 left-3 bg-blue-600 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-medium">
-                  {property.transactionType === 'sale' ? 'იყიდება' : 
-                   property.transactionType === 'rent' ? 'ქირავდება' : 
+                  {property.transactionType === 'sale' ? t.search.forSale : 
+                   property.transactionType === 'rent' ? t.search.forRent : 
                    property.transactionType}
                 </div>
 
@@ -138,7 +138,7 @@ const Favorites: React.FC = () => {
                     )}
                     <div className="flex items-center">
                       <Square size={16} className="mr-1" />
-                      <span>{property.area}მ²</span>
+                      <span>{property.area} {t.properties.sqm}</span>
                     </div>
                   </div>
                 </div>
@@ -152,14 +152,14 @@ const Favorites: React.FC = () => {
                   {/* Owner/Company Info */}
                   <div className="text-xs text-gray-500">
                     {property.company ? (
-                      <span>კომპანია: {property.company.name}</span>
+                      <span>{t.properties.company}: {property.company.name}</span>
                     ) : property.owner ? (
-                      <span>მესაკუთრე: {property.owner.firstName} {property.owner.lastName}</span>
+                      <span>{t.properties.owner}: {property.owner.firstName} {property.owner.lastName}</span>
                     ) : null}
                   </div>
                   
                   <button className="text-blue-600 font-semibold hover:text-blue-700 transition-colors text-sm md:text-base">
-                    დეტალები →
+                    {t.properties.viewDetails} →
                   </button>
                 </div>
               </div>

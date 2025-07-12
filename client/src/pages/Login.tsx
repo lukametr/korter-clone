@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { 
   EnvelopeIcon, 
   LockClosedIcon, 
@@ -11,6 +12,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 const Login: React.FC = () => {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +30,7 @@ const Login: React.FC = () => {
       await login(email, password);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'შეცდომა შესვლისას');
+      setError(err.response?.data?.message || t.auth.loginError);
     } finally {
       setLoading(false);
     }
@@ -43,15 +45,15 @@ const Login: React.FC = () => {
           </div>
         </div>
         <h2 className="text-center text-3xl font-bold text-gray-900 mb-2">
-          კეთილი იყოს თქვენი მობრძანება
+          {t.auth.welcomeBack}
         </h2>
         <p className="text-center text-lg text-gray-600 mb-8">
-          შედით თქვენს ანგარიშში
+          {t.auth.signInToAccount}
         </p>
         <p className="text-center text-sm text-gray-500">
-          არ გაქვთ ანგარიში?{' '}
+          {t.auth.noAccount}{' '}
           <Link to="/register" className="font-semibold text-blue-600 hover:text-blue-500 transition-colors duration-200">
-            დარეგისტრირდით
+            {t.auth.signUp}
           </Link>
         </p>
       </div>
@@ -68,7 +70,7 @@ const Login: React.FC = () => {
 
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                ელფოსტა
+                {t.auth.email}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -83,14 +85,14 @@ const Login: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
-                  placeholder="თქვენი ელფოსტა"
+                  placeholder={t.auth.email}
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-                პაროლი
+                {t.auth.password}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -105,7 +107,7 @@ const Login: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full pl-12 pr-12 py-4 border border-gray-200 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/50 backdrop-blur-sm"
-                  placeholder="თქვენი პაროლი"
+                  placeholder={t.auth.password}
                 />
                 <button
                   type="button"
@@ -130,11 +132,11 @@ const Login: React.FC = () => {
                 {loading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>შესვლა...</span>
+                    <span>{t.common.loading}</span>
                   </>
                 ) : (
                   <>
-                    <span>შესვლა</span>
+                    <span>{t.auth.signIn}</span>
                     <ArrowRightIcon className="h-4 w-4" />
                   </>
                 )}
@@ -148,22 +150,22 @@ const Login: React.FC = () => {
                 <div className="w-full border-t border-gray-200" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500 font-medium">ტესტ ანგარიში</span>
+                <span className="px-4 bg-white text-gray-500 font-medium">{t.auth.testAccount}</span>
               </div>
             </div>
 
             <div className="mt-6">
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
                 <p className="text-sm text-gray-700 font-medium mb-2">
-                  გამოიყენეთ ტესტირებისთვის:
+                  {t.auth.useForTesting}
                 </p>
                 <div className="space-y-1 text-sm">
                   <div className="flex items-center space-x-2">
-                    <span className="text-gray-500">ელფოსტა:</span>
+                    <span className="text-gray-500">{t.auth.emailLabel}</span>
                     <span className="font-mono text-blue-600">admin@admin.com</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="text-gray-500">პაროლი:</span>
+                    <span className="text-gray-500">{t.auth.passwordLabel}</span>
                     <span className="font-mono text-blue-600">admin123</span>
                   </div>
                 </div>

@@ -67,7 +67,9 @@ export const en = {
     viewDetails: "View Details",
     bedrooms: "Bedrooms",
     bathrooms: "Bathrooms",
-    area: "Area"
+    area: "Area",
+    sqm: "sqm",
+    minAreaPlaceholder: "0 sqm"
   },
 
   // Favorites page
@@ -93,7 +95,40 @@ export const en = {
     back: "Back",
     next: "Next",
     previous: "Previous",
-    close: "Close"
+    close: "Close",
+    clear: "Clear",
+    found: "Found",
+    properties: "Properties"
+  },
+
+  // Auth pages
+  auth: {
+    welcome: "Welcome",
+    welcomeBack: "Welcome Back",
+    signInToAccount: "Sign in to your account",
+    createAccount: "Create your account",
+    signIn: "Sign In",
+    signUp: "Sign Up",
+    email: "Email",
+    password: "Password",
+    confirmPassword: "Confirm Password",
+    firstName: "First Name",
+    lastName: "Last Name",
+    phone: "Phone",
+    forgotPassword: "Forgot your password?",
+    noAccount: "Don't have an account?",
+    haveAccount: "Already have an account?",
+    loginError: "Login error",
+    registerError: "Registration error",
+    emailRequired: "Email is required",
+    passwordRequired: "Password is required",
+    invalidEmail: "Invalid email format",
+    passwordMinLength: "Password must be at least 6 characters",
+    passwordsNoMatch: "Passwords do not match",
+    testAccount: "Test Account",
+    useForTesting: "Use for testing:",
+    emailLabel: "Email:",
+    passwordLabel: "Password:"
   },
 
   // User roles

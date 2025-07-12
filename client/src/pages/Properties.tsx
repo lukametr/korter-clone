@@ -169,7 +169,7 @@ const Properties: React.FC = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">იტვირთება...</p>
+          <p className="text-gray-600">{t.common.loading}</p>
         </div>
       </div>
     );
@@ -179,13 +179,13 @@ const Properties: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">უძრავი ქონება</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">{t.properties.title}</h1>
           
           <div className="relative mb-6">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
-              placeholder="ძებნა მისამართით, სათაურით..."
+              placeholder={t.search.searchByAddress}
               className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -194,20 +194,20 @@ const Properties: React.FC = () => {
 
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">ფილტრები</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t.search.filters}</h3>
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className="flex items-center text-blue-600 hover:text-blue-700"
               >
                 <SlidersHorizontal size={20} className="mr-2" />
-                {showFilters ? 'დამალვა' : 'ფილტრების ჩვენება'}
+                {showFilters ? t.common.close : t.search.filters}
               </button>
             </div>
 
             {showFilters && (
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">მინ. ფასი</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.search.minPrice}</label>
                   <input
                     type="number"
                     placeholder="0"
@@ -217,7 +217,7 @@ const Properties: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">მაქს. ფასი</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.search.maxPrice}</label>
                   <input
                     type="number"
                     placeholder="∞"
@@ -227,20 +227,20 @@ const Properties: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">ქალაქი</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.search.city}</label>
                   <input
                     type="text"
-                    placeholder="ქალაქი"
+                    placeholder={t.search.city}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     value={filters.city}
                     onChange={(e) => handleFilterChange('city', e.target.value)}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">მინ. ფართი</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t.search.minArea}</label>
                   <input
                     type="number"
-                    placeholder="0 მ²"
+                    placeholder={t.properties.minAreaPlaceholder}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     value={filters.minArea}
                     onChange={(e) => handleFilterChange('minArea', e.target.value)}
@@ -251,7 +251,7 @@ const Properties: React.FC = () => {
                     onClick={clearFilters}
                     className="w-full px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
                   >
-                    გასუფთავება
+                    {t.common.clear}
                   </button>
                 </div>
               </div>
@@ -261,15 +261,15 @@ const Properties: React.FC = () => {
 
         <div className="mb-6">
           <p className="text-gray-600">
-            ნაპოვნი: <span className="font-semibold">{filteredProperties.length}</span> ბინა
+            {t.common.found}: <span className="font-semibold">{filteredProperties.length}</span> {t.common.properties}
           </p>
         </div>
 
         {filteredProperties.length === 0 ? (
           <div className="text-center py-12">
             <Search size={48} className="mx-auto text-gray-400 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">ობიექტი ვერ მოიძებნა</h3>
-            <p className="text-gray-600">სცადეთ სხვა საძიებო კრიტერიუმები</p>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">{t.properties.noResults}</h3>
+            <p className="text-gray-600">{t.properties.noResultsDesc}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
@@ -324,7 +324,7 @@ const Properties: React.FC = () => {
                       )}
                       <div className="flex items-center">
                         <Square size={14} className="mr-1" />
-                        <span>{property.area} მ²</span>
+                        <span>{property.area} {t.properties.sqm}</span>
                       </div>
                     </div>
                   </div>
@@ -336,9 +336,9 @@ const Properties: React.FC = () => {
                   {(property.owner || property.company) && (
                     <div className="text-xs text-gray-500 mb-3">
                       {property.company ? (
-                        <span>კომპანია: {property.company.name}</span>
+                        <span>{t.properties.company}: {property.company.name}</span>
                       ) : property.owner ? (
-                        <span>მესაკუთრე: {property.owner.firstName} {property.owner.lastName}</span>
+                        <span>{t.properties.owner}: {property.owner.firstName} {property.owner.lastName}</span>
                       ) : null}
                     </div>
                   )}

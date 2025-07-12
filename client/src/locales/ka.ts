@@ -67,7 +67,9 @@ export const ka = {
     viewDetails: "დეტალები",
     bedrooms: "საძინებლები",
     bathrooms: "სააბაზანოები",
-    area: "ფართი"
+    area: "ფართი",
+    sqm: "მ²",
+    minAreaPlaceholder: "0 მ²"
   },
 
   // Favorites page
@@ -93,7 +95,40 @@ export const ka = {
     back: "უკან",
     next: "შემდეგი",
     previous: "წინა",
-    close: "დახურვა"
+    close: "დახურვა",
+    clear: "გასუფთავება",
+    found: "ნაპოვნი",
+    properties: "ბინა"
+  },
+
+  // Auth pages
+  auth: {
+    welcome: "კეთილი იყოს თქვენი მობრძანება",
+    welcomeBack: "მოგესალმებით",
+    signInToAccount: "შედით თქვენს ანგარიშში",
+    createAccount: "შექმენით ანგარიში",
+    signIn: "შესვლა",
+    signUp: "რეგისტრაცია",
+    email: "ელ. ფოსტა",
+    password: "პაროლი",
+    confirmPassword: "გაიმეორეთ პაროლი",
+    firstName: "სახელი",
+    lastName: "გვარი",
+    phone: "ტელეფონი",
+    forgotPassword: "დაგავიწყდათ პაროლი?",
+    noAccount: "არ გაქვთ ანგარიში?",
+    haveAccount: "უკვე გაქვთ ანგარიში?",
+    loginError: "შეცდომა შესვლისას",
+    registerError: "შეცდომა რეგისტრაციისას",
+    emailRequired: "ელ. ფოსტა აუცილებელია",
+    passwordRequired: "პაროლი აუცილებელია",
+    invalidEmail: "არასწორი ელ. ფოსტის ფორმატი",
+    passwordMinLength: "პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო",
+    passwordsNoMatch: "პაროლები არ ემთხვევა",
+    testAccount: "ტესტ ანგარიში",
+    useForTesting: "გამოიყენეთ ტესტირებისთვის:",
+    emailLabel: "ელფოსტა:",
+    passwordLabel: "პაროლი:"
   },
 
   // User roles

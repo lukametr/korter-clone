@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { 
   UserIcon, 
   EnvelopeIcon, 
@@ -11,6 +12,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 const Register: React.FC = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,7 +39,7 @@ const Register: React.FC = () => {
     setError('');
 
     if (formData.password !== formData.confirmPassword) {
-      setError('პაროლები არ ემთხვევა');
+      setError(t.auth.passwordsNoMatch);
       setLoading(false);
       return;
     }
@@ -46,7 +48,7 @@ const Register: React.FC = () => {
       await register(formData);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'შეცდომა რეგისტრაციისას');
+      setError(err.response?.data?.message || t.auth.registerError);
     } finally {
       setLoading(false);
     }
