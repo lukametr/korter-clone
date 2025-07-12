@@ -204,7 +204,7 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Carousel */}
-      <section className="relative h-[70vh] min-h-[500px] max-h-[700px] overflow-hidden">
+      <section className="relative h-[42vh] md:h-[70vh] min-h-[300px] md:min-h-[500px] max-h-[420px] md:max-h-[700px] overflow-hidden">
         {heroSlides.map((slide, index) => (
           <div
             key={slide.id}
