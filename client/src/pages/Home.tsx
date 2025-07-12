@@ -4,6 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { 
   Search, 
   MapPin, 
+  Map,
   Bed, 
   Bath, 
   Square, 
@@ -300,8 +301,9 @@ const Home: React.FC = () => {
                   <option>400,000+ ₾</option>
                 </select>
               </div>
-              <button className="bg-blue-600 text-white py-3 md:py-4 px-6 md:px-8 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg">
-                {t.search.search}
+              <button className="bg-blue-600 text-white py-3 md:py-4 px-6 md:px-8 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                <Map size={20} />
+                მოძებნა რუკაზე
               </button>
             </div>
           </div>
