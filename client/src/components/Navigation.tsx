@@ -11,7 +11,10 @@ import {
   Building,
   Building2 as OfficeIcon,
   Search,
-  Bell
+  Bell,
+  Heart,
+  MapPin,
+  Globe
 } from 'lucide-react';
 
 const Navigation: React.FC = () => {
@@ -19,6 +22,10 @@ const Navigation: React.FC = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const [isCitySearchOpen, setIsCitySearchOpen] = useState(false);
+  const [cityQuery, setCityQuery] = useState('');
+  const [currentLanguage, setCurrentLanguage] = useState('ka'); // 'ka' for Georgian, 'en' for English
 
   const handleLogout = () => {
     logout();
@@ -32,6 +39,32 @@ const Navigation: React.FC = () => {
 
   const toggleUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
+  };
+
+  const toggleLanguageMenu = () => {
+    setIsLanguageMenuOpen(!isLanguageMenuOpen);
+  };
+
+  const toggleCitySearch = () => {
+    setIsCitySearchOpen(!isCitySearchOpen);
+  };
+
+  const handleLanguageChange = (language: string) => {
+    setCurrentLanguage(language);
+    setIsLanguageMenuOpen(false);
+    // TODO: Implement language switching logic
+  };
+
+  const handleCitySearch = () => {
+    if (cityQuery.trim()) {
+      navigate(`/properties?city=${cityQuery}`);
+      setIsCitySearchOpen(false);
+      setCityQuery('');
+    }
+  };
+
+  const handleFavoritesClick = () => {
+    navigate('/favorites');
   };
 
   return (
@@ -74,11 +107,76 @@ const Navigation: React.FC = () => {
           </div>
 
           {/* Desktop Right Side */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-3 relative">
             {/* Search Button */}
             <button className="p-2 md:p-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200">
               <Search className="w-5 h-6" />
             </button>
+
+            {/* Favorites Button */}
+            <button 
+              onClick={handleFavoritesClick}
+              className="p-2 md:p-3 text-gray-600 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all duration-200"
+            >
+              <Heart className="w-5 h-6" />
+            </button>
+
+            {/* City Search Button */}
+            <button 
+              onClick={toggleCitySearch}
+              className="p-2 md:p-3 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all duration-200"
+            >
+              <MapPin className="w-5 h-6" />
+            </button>
+
+            {/* City Search Popup */}
+            {isCitySearchOpen && (
+              <div className="absolute top-full right-20 mt-2 bg-white shadow-lg rounded-lg p-4 border border-gray-200 w-64 z-50">
+                <input
+                  type="text"
+                  value={cityQuery}
+                  onChange={(e) => setCityQuery(e.target.value)}
+                  placeholder="მოძებნე ქალაქი..."
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                />
+                <button
+                  onClick={handleCitySearch}
+                  className="mt-2 w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-all duration-200"
+                >
+                  ძიება
+                </button>
+              </div>
+            )}
+
+            {/* Language Selection Button */}
+            <button 
+              onClick={toggleLanguageMenu}
+              className="p-2 md:p-3 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-200"
+            >
+              <Globe className="w-5 h-6" />
+            </button>
+
+            {/* Language Menu Popup */}
+            {isLanguageMenuOpen && (
+              <div className="absolute top-full right-12 mt-2 bg-white shadow-lg rounded-lg border border-gray-200 w-32 z-50">
+                <button
+                  onClick={() => handleLanguageChange('ka')}
+                  className={`w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors ${
+                    currentLanguage === 'ka' ? 'bg-purple-50 text-purple-600' : 'text-gray-700'
+                  }`}
+                >
+                  🇬🇪 ქართული
+                </button>
+                <button
+                  onClick={() => handleLanguageChange('en')}
+                  className={`w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors ${
+                    currentLanguage === 'en' ? 'bg-purple-50 text-purple-600' : 'text-gray-700'
+                  }`}
+                >
+                  🇺🇸 English
+                </button>
+              </div>
+            )}
 
             {/* Notifications */}
             <button className="p-2 md:p-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 relative">

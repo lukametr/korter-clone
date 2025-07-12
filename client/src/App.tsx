@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Properties from './pages/Properties';
 import AdminDashboard from './pages/AdminDashboard';
 import Profile from './pages/Profile';
+import Favorites from './pages/Favorites';
 import { testApiConnection } from './services/testApiConnection';
 import './App.css';
 
@@ -36,6 +37,7 @@ function App() {
               <Route path="/properties" element={<Properties />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/favorites" element={<Favorites />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
