@@ -7,6 +7,7 @@ import {
   Bath, 
   Square, 
   SlidersHorizontal,
+  Heart,
 } from 'lucide-react';
 import { getProperties } from '../services/api';
 
@@ -42,6 +43,7 @@ const Properties: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [filters, setFilters] = useState({
     minPrice: '',
     maxPrice: '',
@@ -52,6 +54,7 @@ const Properties: React.FC = () => {
 
   useEffect(() => {
     fetchProperties();
+    loadFavorites();
     
     // Get search and city parameters from URL
     const searchParam = searchParams.get('search');
@@ -65,6 +68,31 @@ const Properties: React.FC = () => {
       setFilters(prev => ({ ...prev, city: cityParam }));
     }
   }, [searchParams]);
+
+  const loadFavorites = () => {
+    const savedFavorites = localStorage.getItem('favorites');
+    if (savedFavorites) {
+      const favoriteProperties = JSON.parse(savedFavorites);
+      setFavorites(favoriteProperties.map((prop: Property) => prop._id));
+    }
+  };
+
+  const toggleFavorite = (property: Property) => {
+    const savedFavorites = localStorage.getItem('favorites');
+    let favoriteProperties: Property[] = savedFavorites ? JSON.parse(savedFavorites) : [];
+    
+    const isAlreadyFavorite = favoriteProperties.some(fav => fav._id === property._id);
+    
+    if (isAlreadyFavorite) {
+      favoriteProperties = favoriteProperties.filter(fav => fav._id !== property._id);
+      setFavorites(prev => prev.filter(id => id !== property._id));
+    } else {
+      favoriteProperties.push(property);
+      setFavorites(prev => [...prev, property._id]);
+    }
+    
+    localStorage.setItem('favorites', JSON.stringify(favoriteProperties));
+  };
 
   useEffect(() => {
     filterProperties();
@@ -257,6 +285,16 @@ const Properties: React.FC = () => {
                   <div className="absolute top-3 left-3 bg-blue-600 text-white px-2 py-1 rounded-lg text-sm font-semibold">
                     {property.price} {property.currency === 'GEL' ? '₾' : property.currency === 'USD' ? '$' : '€'}
                   </div>
+                  <button
+                    onClick={() => toggleFavorite(property)}
+                    className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 ${
+                      favorites.includes(property._id) 
+                        ? 'bg-red-500 text-white hover:bg-red-600' 
+                        : 'bg-white text-gray-600 hover:bg-red-50 hover:text-red-500'
+                    }`}
+                  >
+                    <Heart size={16} className={favorites.includes(property._id) ? 'fill-current' : ''} />
+                  </button>
                 </div>
 
                 <div className="p-4 md:p-5">
