@@ -221,15 +221,37 @@ const Home: React.FC = () => {
               />
               <div className="absolute inset-0 bg-black/50"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center text-white max-w-5xl mx-auto px-6">
+                <div className="text-center text-white max-w-7xl mx-auto px-6">
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 leading-tight">{slide.title}</h1>
                   <p className="text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 opacity-90 max-w-3xl mx-auto">{slide.subtitle}</p>
-                  <Link
-                    to="/properties"
-                    className="inline-block bg-white text-gray-900 px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 text-base md:text-lg shadow-lg hover:shadow-xl"
-                  >
-                    {t.home.searchProperties}
-                  </Link>
+                  
+                  {/* Search Panel */}
+                  <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-100 max-w-5xl mx-auto">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                        <input
+                          type="text"
+                          placeholder={t.search.searchByAddress}
+                          className="w-full pl-10 pr-4 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900"
+                        />
+                      </div>
+                      <div className="relative">
+                        <select className="w-full pl-4 pr-10 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-gray-900">
+                          <option>{t.search.price}</option>
+                          <option>100,000 - 200,000 ₾</option>
+                          <option>200,000 - 400,000 ₾</option>
+                          <option>400,000+ ₾</option>
+                        </select>
+                      </div>
+                      <div className="lg:col-span-2">
+                        <button className="w-full bg-blue-600 text-white py-3 md:py-4 px-6 md:px-8 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                          <Map size={20} />
+                          მოძებნა რუკაზე
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -261,52 +283,6 @@ const Home: React.FC = () => {
               }`}
             />
           ))}
-        </div>
-      </section>
-
-      {/* Search Section */}
-      <section className="bg-white py-8 md:py-12 -mt-16 md:-mt-20 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-100">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <input
-                  type="text"
-                  placeholder={t.search.searchByAddress}
-                  className="w-full pl-10 pr-4 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                />
-              </div>
-              {/* ამოღებულია ქირავდება/იყიდება და ტიპების select-ები */}
-              {/* <div className="relative">
-                <select className="w-full pl-4 pr-10 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
-                  <option>ქირავდება</option>
-                  <option>იყიდება</option>
-                </select>
-                <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              </div>
-              <div className="relative">
-                <select className="w-full pl-4 pr-10 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
-                  <option>ყველა ტიპი</option>
-                  <option>ბინა</option>
-                  <option>სახლი</option>
-                  <option>ოფისი</option>
-                </select>
-              </div> */}
-              <div className="relative">
-                <select className="w-full pl-4 pr-10 py-3 md:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
-                  <option>{t.search.price}</option>
-                  <option>100,000 - 200,000 ₾</option>
-                  <option>200,000 - 400,000 ₾</option>
-                  <option>400,000+ ₾</option>
-                </select>
-              </div>
-              <button className="bg-blue-600 text-white py-3 md:py-4 px-6 md:px-8 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2">
-                <Map size={20} />
-                მოძებნა რუკაზე
-              </button>
-            </div>
-          </div>
         </div>
       </section>
 
