@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
     });
   } catch (error) {
     console.error("Get properties error:", error);
-    res.status(500).json({ message: "სერვერის შეცდომა" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 

@@ -18,7 +18,7 @@ function App() {
     testApiConnection().then((res: any) => {
       if (res?.error) {
         console.error('API connection error:', res.error);
-        alert('API კავშირი ვერ მოხერხდა: ' + res.error);
+        alert('API connection failed: ' + res.error);
       } else {
         console.log('API connection OK:', res);
       }
