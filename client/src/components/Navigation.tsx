@@ -24,7 +24,9 @@ const Navigation: React.FC = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [isCitySearchOpen, setIsCitySearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [cityQuery, setCityQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentLanguage, setCurrentLanguage] = useState('ka'); // 'ka' for Georgian, 'en' for English
 
   const handleLogout = () => {
@@ -49,6 +51,10 @@ const Navigation: React.FC = () => {
     setIsCitySearchOpen(!isCitySearchOpen);
   };
 
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
   const handleLanguageChange = (language: string) => {
     setCurrentLanguage(language);
     setIsLanguageMenuOpen(false);
@@ -60,6 +66,14 @@ const Navigation: React.FC = () => {
       navigate(`/properties?city=${cityQuery}`);
       setIsCitySearchOpen(false);
       setCityQuery('');
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/properties?search=${searchQuery}`);
+      setIsSearchOpen(false);
+      setSearchQuery('');
     }
   };
 
@@ -109,9 +123,31 @@ const Navigation: React.FC = () => {
           {/* Desktop Right Side */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-3 relative">
             {/* Search Button */}
-            <button className="p-2 md:p-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200">
+            <button 
+              onClick={toggleSearch}
+              className="p-2 md:p-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
+            >
               <Search className="w-5 h-6" />
             </button>
+
+            {/* Search Popup */}
+            {isSearchOpen && (
+              <div className="absolute top-full left-0 mt-2 bg-white shadow-lg rounded-lg p-4 border border-gray-200 w-80 z-50">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="მოძებნე პროექტის დასახელებით..."
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                />
+                <button
+                  onClick={handleSearch}
+                  className="mt-2 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-all duration-200"
+                >
+                  ძიება
+                </button>
+              </div>
+            )}
 
             {/* Favorites Button */}
             <button 

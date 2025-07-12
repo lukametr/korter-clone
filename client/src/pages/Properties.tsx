@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { 
   Search, 
   MapPin, 
@@ -35,6 +36,7 @@ interface Property {
 }
 
 const Properties: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [properties, setProperties] = useState<Property[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +52,19 @@ const Properties: React.FC = () => {
 
   useEffect(() => {
     fetchProperties();
-  }, []);
+    
+    // Get search and city parameters from URL
+    const searchParam = searchParams.get('search');
+    const cityParam = searchParams.get('city');
+    
+    if (searchParam) {
+      setSearchTerm(searchParam);
+    }
+    
+    if (cityParam) {
+      setFilters(prev => ({ ...prev, city: cityParam }));
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     filterProperties();

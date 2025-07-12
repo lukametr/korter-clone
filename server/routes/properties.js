@@ -177,4 +177,43 @@ router.get("/company/:companyId", auth, async (req, res) => {
   }
 });
 
+// Search properties by title
+router.get("/search", async (req, res) => {
+  try {
+    const { query, page = 1, limit = 10 } = req.query;
+
+    if (!query) {
+      return res.status(400).json({ message: "საძიებო ზონა მუხტია" });
+    }
+
+    const filter = {
+      isActive: true,
+      $or: [
+        { title: new RegExp(query, "i") },
+        { description: new RegExp(query, "i") },
+        { address: new RegExp(query, "i") },
+      ],
+    };
+
+    const properties = await Property.find(filter)
+      .populate("owner", "firstName lastName email")
+      .populate("company", "name logo")
+      .sort({ createdAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+
+    const total = await Property.countDocuments(filter);
+
+    res.json({
+      properties,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+      total,
+    });
+  } catch (error) {
+    console.error("Search properties error:", error);
+    res.status(500).json({ message: "სერვერის შეცდომა" });
+  }
+});
+
 module.exports = router;
